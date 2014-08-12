@@ -25,9 +25,9 @@ build_wireshark(){
     cp ../src/tshark.c ${WIRESHARK_SRC}
     cp ../src/packet-* ${WIRESHARK_SRC}/epan/dissectors
     cp ../src/cJSON.* ${WIRESHARK_SRC}
+    cp ../src/Makefile.common ${WIRESHARK_SRC}
     cd ${WIRESHARK_SRC}
     sh -x autogen.sh
-    cp ../src/Makefile.common ${WIRESHARK_SRC}
     ./configure --prefix=${WIRESHARK_PREFIX}  --enable-wireshark=false
     make
     make install
