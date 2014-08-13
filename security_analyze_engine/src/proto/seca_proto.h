@@ -68,6 +68,7 @@ SECA_EXPORT seca_proto_pool_destroy(seca_proto_pool_t *pp);
 SECA_EXPORT ce_int_t seca_proto_fetch_data_push(seca_proto_pool_t *pp,seca_fetch_data_t *data);
 
 SECA_EXPORT seca_proto_request_t * seca_proto_request_pop(seca_proto_pool_t *pp,proto_t proto_type);
+
 #ifdef __cplusplus
 }
 #endif /*__cplusplus*/
