@@ -343,24 +343,28 @@ static void write_mirror_pipe(FILE *fp,const char* fn){
 }
 
 static const char* get_str_value(proto_tree *tree,const int index,data_buf_t *db){
-  int len;    
-	GPtrArray *finfo_array;
+    int len;    
+    GPtrArray *finfo_array;
+    char *rett=NULL;
 
-	finfo_array = proto_find_finfo(tree,index);
- 
-	if(g_ptr_array_len(finfo_array)>=1){
-    len = fvalue_string_repr_len(&((field_info*)finfo_array->pdata[0])->value,FTREPR_DISPLAY);
-    if(len==-1)return NULL;
-
-    if(!get_data_buf(db,len))return NULL;
-		
-    fvalue_to_string_repr(&((field_info*)finfo_array->pdata[0])->value,
-		FTREPR_DISPLAY, db->p);
-
-		g_ptr_array_free(finfo_array,TRUE);
-		return db->p;
-	}
-	return NULL;
+    finfo_array = proto_find_finfo(tree,index);
+        
+    do{                       
+        if(g_ptr_array_len(finfo_array)>=1){
+            len = fvalue_string_repr_len(&((field_info*)finfo_array->pdata[0])->value,FTREPR_DISPLAY);
+            if(len==-1)break; 
+            
+            if(!get_data_buf(db,len))break;
+            
+            fvalue_to_string_repr(&((field_info*)finfo_array->pdata[0])->value,FTREPR_DISPLAY, db->p);
+            
+            rett = db->p;     
+    }  
+        
+    }while(0);
+       
+    g_ptr_array_free(finfo_array,TRUE);
+    return rett;
 }
 
 static void write_ip_mirro(proto_tree *tree,cJSON *json_root,data_buf_t *db){
